@@ -2,16 +2,16 @@
 
 Block::Block()
 {
+	block_		 = Rect( BLOCK_USUAL_WIDTH, BLOCK_USUAL_HEIGHT);
 	block_color_ = BLANK;
-	deletable_ = false;
-	block_ = Rect( BLOCK_USUAL_WIDTH, BLOCK_USUAL_HEIGHT);
+	deletable_	 = false;
 }
 
 Block::Block( Point block_coordinates, BlockColor block_color)
 {
+	block_		 = Rect(block_coordinates, BLOCK_USUAL_WIDTH, BLOCK_USUAL_HEIGHT);
 	block_color_ = block_color;
-	deletable_ = false;
-	block_ = Rect( block_coordinates, BLOCK_USUAL_WIDTH, BLOCK_USUAL_HEIGHT);
+	deletable_	 = false;
 }
 
 void Block::DrawBlock( Color block_color)
