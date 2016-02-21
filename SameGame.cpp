@@ -11,18 +11,18 @@ void SameGame::DrawCurrentScene()
 	// 現在のシーンを描画する
 	switch (current_scene_)
 	{
-	// タイトルシーンの描画
-	case TITLE_SCENE:
-		title_scene_.DrawScene();		
-		break;
+		// タイトルシーンの描画
+		case TITLE_SCENE:
+			title_scene_.DrawScene();		
+			break;
 	
-	// メイン画面の描画
-	case MAIN_SCENE:
-		main_scene_.DrawScene();
-		break;
+		// メイン画面の描画
+		case MAIN_SCENE:
+			main_scene_.DrawScene();
+			break;
 
-	default:
-		break;
+		default:
+			break;
 	}
 }
 

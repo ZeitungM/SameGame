@@ -7,9 +7,9 @@ Command::Command()
 
 Command::Command(String command_text, SceneType command_scene, CommandType command_type)
 {
-	command_text_ = command_text;
-	usage_scene_ = command_scene;
-	command_type_ = command_type;
+	command_text_	= command_text;
+	usage_scene_	= command_scene;
+	command_type_	= command_type;
 }
 
 void Command::Draw(int x_coodinate, int y_coodinate, bool is_selected)
@@ -21,7 +21,6 @@ void Command::Draw(int x_coodinate, int y_coodinate, bool is_selected)
 	if (is_selected)	// ‘I‘ð‚³‚ê‚Ä‚¢‚½‚çƒRƒ}ƒ“ƒh‚Ì”wŒi‚ð“h‚è‚Â‚Ô‚·
 		command_area_.draw(selected_color_);
 	command_text_font_(command_text_).drawCenter( command_area_.center);
-
 }
 
 CommandType Command::GetCommandType()

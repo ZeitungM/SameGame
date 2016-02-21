@@ -3,13 +3,15 @@
 Field::Field()
 {
 	// フィールドの左上の座標(ウィンドウ中央からブロックの大きさ最大時の縦横半数分左上)を計算
-	field_top_left_coordinates_ = Point( Window::Width()/2 - BLOCK_MAX_WIDTH*BLOCK_NUM_X/2, Window::Height()/2 - BLOCK_MAX_HEIGHT*BLOCK_NUM_Y/2);
+	field_top_left_coordinates_ = Point(Window::Width()/2	- BLOCK_MAX_WIDTH*BLOCK_NUM_X/2,
+										Window::Height()/2	- BLOCK_MAX_HEIGHT*BLOCK_NUM_Y/2);
 
 	// インスタンス生成時にフィールドにランダムな色のブロックを配置する
 	for (int yi = 0; yi < BLOCK_NUM_Y; yi++)
 		for (int xi = 0; xi < BLOCK_NUM_X; xi++)
 		{
-			Point block_coordinates = Point( field_top_left_coordinates_.x + BLOCK_MAX_WIDTH*xi, field_top_left_coordinates_.y + BLOCK_MAX_HEIGHT*yi);
+			Point block_coordinates = Point(field_top_left_coordinates_.x + BLOCK_MAX_WIDTH*xi,
+											field_top_left_coordinates_.y + BLOCK_MAX_HEIGHT*yi);
 			blocks_[xi][yi] = Block( block_coordinates, (BlockColor)Random((int)RED, (int)MAGENTA));
 		}
 }
@@ -82,7 +84,8 @@ int Field::DeleteBlock()
 		{
 			if (blocks_[xi][yi].deletable_)
 			{
-				Point block_coordinates = Point( field_top_left_coordinates_.x + BLOCK_MAX_WIDTH*xi, field_top_left_coordinates_.y + BLOCK_MAX_HEIGHT*yi);
+				Point block_coordinates = Point(field_top_left_coordinates_.x + BLOCK_MAX_WIDTH*xi,
+												field_top_left_coordinates_.y + BLOCK_MAX_HEIGHT*yi);
 				blocks_[xi][yi] = Block( block_coordinates, BLANK);
 				num_deleted_block++;
 			}
@@ -104,8 +107,8 @@ void Field::CloseUpVerticalSpace()
 			{
 				if (blocks_[xi][yi+1].block_color_==BLANK && blocks_[xi][yi].block_color_!=BLANK)
 				{
-					std::swap( blocks_[xi][yi].block_color_, blocks_[xi][yi+1].block_color_);
-					std::swap( blocks_[xi][yi].deletable_, blocks_[xi][yi+1].deletable_);
+					std::swap( blocks_[xi][yi].block_color_,blocks_[xi][yi+1].block_color_);
+					std::swap( blocks_[xi][yi].deletable_,	blocks_[xi][yi+1].deletable_);
 					dropped = true;
 				}
 			}
@@ -126,8 +129,8 @@ void Field::FillBlankColumn()
 			if ( blocks_[xi][BLOCK_NUM_Y-1].block_color_==BLANK && blocks_[xi+1][BLOCK_NUM_Y-1].block_color_!=BLANK)
 			{
 				for (int yi = 0; yi < BLOCK_NUM_Y; yi++){
-					std::swap( blocks_[xi][yi].block_color_, blocks_[xi+1][yi].block_color_);
-					std::swap( blocks_[xi][yi].deletable_, blocks_[xi+1][yi].deletable_);
+					std::swap( blocks_[xi][yi].block_color_,blocks_[xi+1][yi].block_color_);
+					std::swap( blocks_[xi][yi].deletable_,	blocks_[xi+1][yi].deletable_);
 				}
 				filled = true;
 			}

@@ -16,12 +16,12 @@ MenuWindow::MenuWindow( int commands_num, SceneType usage_scene)
 	commands_ = (Command *)malloc(sizeof(Command)*commands_num);
 
 	// コマンドのテキストを初期化
-	String command_start_text = L"スタート";
-	String command_quit_text = L"終了";
+	String command_start_text	= L"スタート";
+	String command_quit_text	= L"終了";
 	
 	// commands[i]の各要素に対して引数付きコンストラクタで初期化
-	new(this->commands_)Command( command_start_text, usage_scene, COMMAND_START);
-	new(this->commands_+1)Command( command_quit_text, usage_scene, COMMAND_QUIT);
+	new(this->commands_)	Command( command_start_text, usage_scene, COMMAND_START);
+	new(this->commands_+1)	Command( command_quit_text,	 usage_scene, COMMAND_QUIT);
 }
 
 // コマンドの数とコマンド群を受け取り、メニューウィンドウを生成
@@ -81,15 +81,15 @@ CommandType MenuWindow::ExecuteCommand(Command command)
 {
 	switch (command.GetCommandType())
 	{
-	case COMMAND_START:
-		break;
+		case COMMAND_START:
+			break;
 	
-	case COMMAND_QUIT:
-		System::Exit();
-		break;
+		case COMMAND_QUIT:
+			System::Exit();
+			break;
 
-	default:
-		break;
+		default:
+			break;
 	}
 	return command.GetCommandType();
 }
