@@ -67,13 +67,14 @@ void MenuWindow::DrawMenu()
 	}
 
 	// コマンドの描画
+	int commands_area_top = 100;
 	for (int command_i = 0; command_i < TITLE_MENU_COMMANDS_N; command_i++)
 	{
-		// TODO: マジックナンバー撲滅、座標の指定が甘いので微妙に中心からずれる
+		// TODO: マジックナンバー撲滅
 		if (command_i==selected_command_)
-			commands_[command_i].Draw( 200, 100+50*command_i, true);
+			commands_[command_i].Draw(	commands_area_top+commands_[command_i].command_area_height_*command_i, true);
 		else
-			commands_[command_i].Draw( 200, 100+50*command_i, false);
+			commands_[command_i].Draw(	commands_area_top+commands_[command_i].command_area_height_*command_i, false);
 	}
 }
 

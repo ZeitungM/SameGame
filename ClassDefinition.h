@@ -120,7 +120,7 @@ public:
 	CommandType GetCommandType();
 	SceneType GetUsageScene();
 
-	void Draw(int x_coodinate, int y_coodinate, bool is_selected);
+	void Draw( int y_coodinate, bool is_selected);
 };
 
 class MenuWindow
