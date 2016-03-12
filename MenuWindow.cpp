@@ -5,25 +5,6 @@ MenuWindow::MenuWindow()
 
 }
 
-// コマンドの数を受け取り、メニューウィンドウを生成( テキストは決め打ち、 テスト用)
-MenuWindow::MenuWindow( int commands_num, SceneType usage_scene)
-{
-	selected_command_ = 0;	// 初期状態では一番上のコマンドを選択
-
-	usage_scene_ = usage_scene;
-
-	// メニュー内のコマンドの数だけメモリを動的確保
-	commands_ = (Command *)malloc(sizeof(Command)*commands_num);
-
-	// コマンドのテキストを初期化
-	String command_start_text	= L"スタート";
-	String command_quit_text	= L"終了";
-	
-	// commands[i]の各要素に対して引数付きコンストラクタで初期化
-	new(this->commands_)	Command( command_start_text, usage_scene, COMMAND_START);
-	new(this->commands_+1)	Command( command_quit_text,	 usage_scene, COMMAND_QUIT);
-}
-
 // コマンドの数とコマンド群を受け取り、メニューウィンドウを生成
 MenuWindow::MenuWindow( Command commands[], int commands_num, SceneType usage_scene)
 {

@@ -138,7 +138,6 @@ public:
 	int selected_command_;
 
 	MenuWindow();
-	MenuWindow(int commands_n, SceneType usage_scene);
 	MenuWindow( Command commands[], int commands_n, SceneType usage_scene);
 
 	void DrawMenu();
@@ -151,9 +150,9 @@ class TitleScene
 private:
 	Font title_font_ = Font(30);
 	int menu_back_width_ = 400;
-	int menu_back_height_ = 300;	//-•s—v?
-	Rect menu_back_ = Rect( menu_back_width_, menu_back_height_ ).setCenter( Window::Center() );	//-
-	Color menu_back_color_ = Color( 0, 0, 255, 102);	//-
+	int menu_back_height_ = 300;
+	Rect menu_back_ = Rect( menu_back_width_, menu_back_height_ ).setCenter( Window::Center() );
+	Color menu_back_color_ = Color( 0, 0, 255, 102);
 	Command title_menu_commands_[TITLE_MENU_COMMANDS_N];
 	SceneType scene_type_ = TITLE_SCENE;
 
