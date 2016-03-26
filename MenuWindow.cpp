@@ -14,12 +14,9 @@ MenuWindow::MenuWindow( Command commands[], int commands_num, SceneType usage_sc
 	usage_scene_ = usage_scene;
 
 	// メニュー内のコマンドの初期化
-	// メニュー内のコマンドの数だけメモリを動的確保
-	commands_ = (Command *)malloc(sizeof(Command)*commands_num);
-
-	// this->commands[i]の各要素に、引数のcommands[i]を代入
-	for (int i = 0; i<commands_num; i++)
-		new(commands_+i)Command(commands[i]);
+	// commands_に、引数のcommands[i]を末尾に挿入
+	for (int i = 0; i < commands_num; i++)
+		commands_.push_back(commands[i]);
 }
 
 void MenuWindow::DrawMenu()
@@ -28,11 +25,9 @@ void MenuWindow::DrawMenu()
 
 	Point zero(0, 0), delta = Mouse::Delta();
 
-	//どの項目がマウスオーバーされているか探す
+	// マウスオーバーされているコマンドを探す
 	if (delta != zero)	// マウスの移動量がゼロでなかったらマウスカーソルが動かされたとみなす
 	{
-		// TODO: 配列の長さを取得して終了条件にぶちこむ
-		//ci番目のコマンドがマウスオーバーされていたらselectedを更新
 		for (int command_i = 0; command_i < TITLE_MENU_COMMANDS_N; command_i++)
 			if (commands_[command_i].command_area_.mouseOver)
 				selected_command_ = command_i;
@@ -51,7 +46,6 @@ void MenuWindow::DrawMenu()
 	int commands_area_top = 100;
 	for (int command_i = 0; command_i < TITLE_MENU_COMMANDS_N; command_i++)
 	{
-		// TODO: マジックナンバー撲滅
 		if (command_i==selected_command_)
 			commands_[command_i].Draw(	commands_area_top+commands_[command_i].command_area_height_*command_i, true);
 		else

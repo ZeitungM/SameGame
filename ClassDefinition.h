@@ -1,5 +1,5 @@
 #include <Siv3D.hpp>
-#include <new>
+#include <vector>
 
 #include "Constants.h"
 
@@ -134,7 +134,7 @@ private:
 	Rect menu_back_ = Rect( menu_back_width_, menu_back_height_).setCenter( Window::Center() );
 
 public:
-	Command *commands_;
+	std::vector<Command> commands_;
 	int selected_command_;
 
 	MenuWindow();
