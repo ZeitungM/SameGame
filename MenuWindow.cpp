@@ -6,20 +6,17 @@ MenuWindow::MenuWindow()
 }
 
 // コマンドの数とコマンド群を受け取り、メニューウィンドウを生成
-MenuWindow::MenuWindow( Command commands[], int commands_num, SceneType usage_scene)
+MenuWindow::MenuWindow(Command commands[], int commands_num, SceneType usage_scene)
 {
 	selected_command_ = 0;	// 初期状態では一番上のコマンドを選択
 
-	// メニューウィンドウを使用するシーンを登録
+							// メニューウィンドウを使用するシーンを登録
 	usage_scene_ = usage_scene;
 
 	// メニュー内のコマンドの初期化
-	// メニュー内のコマンドの数だけメモリを動的確保
-	commands_ = (Command *)malloc(sizeof(Command)*commands_num);
-
-	// this->commands[i]の各要素に、引数のcommands[i]を代入
-	for (int i = 0; i<commands_num; i++)
-		new(commands_+i)Command(commands[i]);
+	// commands_に、引数のcommands[i]を末尾に挿入
+	for (int i = 0; i < commands_num; i++)
+		commands_.push_back(commands[i]);
 }
 
 void MenuWindow::DrawMenu()
@@ -28,11 +25,9 @@ void MenuWindow::DrawMenu()
 
 	Point zero(0, 0), delta = Mouse::Delta();
 
-	//どの項目がマウスオーバーされているか探す
+	// マウスオーバーされているコマンドを探す
 	if (delta != zero)	// マウスの移動量がゼロでなかったらマウスカーソルが動かされたとみなす
 	{
-		// TODO: 配列の長さを取得して終了条件にぶちこむ
-		//ci番目のコマンドがマウスオーバーされていたらselectedを更新
 		for (int command_i = 0; command_i < TITLE_MENU_COMMANDS_N; command_i++)
 			if (commands_[command_i].command_area_.mouseOver)
 				selected_command_ = command_i;
@@ -43,7 +38,7 @@ void MenuWindow::DrawMenu()
 	{
 		if (Input::KeyUp.clicked&&selected_command_>0)
 			selected_command_--;
-		if (Input::KeyDown.clicked&&selected_command_<TITLE_MENU_COMMANDS_N-1)
+		if (Input::KeyDown.clicked&&selected_command_<TITLE_MENU_COMMANDS_N - 1)
 			selected_command_++;
 	}
 
@@ -51,11 +46,10 @@ void MenuWindow::DrawMenu()
 	int commands_area_top = 100;
 	for (int command_i = 0; command_i < TITLE_MENU_COMMANDS_N; command_i++)
 	{
-		// TODO: マジックナンバー撲滅
-		if (command_i==selected_command_)
-			commands_[command_i].Draw(	commands_area_top+commands_[command_i].command_area_height_*command_i, true);
+		if (command_i == selected_command_)
+			commands_[command_i].Draw(commands_area_top + commands_[command_i].command_area_height_*command_i, true);
 		else
-			commands_[command_i].Draw(	commands_area_top+commands_[command_i].command_area_height_*command_i, false);
+			commands_[command_i].Draw(commands_area_top + commands_[command_i].command_area_height_*command_i, false);
 	}
 }
 
