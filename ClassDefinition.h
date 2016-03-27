@@ -1,5 +1,5 @@
 #include <Siv3D.hpp>
-#include <new>
+#include <vector>
 
 #include "Constants.h"
 
@@ -128,17 +128,17 @@ class MenuWindow
 private:
 	SceneType usage_scene_;	// メニューウィンドウを使用するシーン
 
-	// メニューの背景
+							// メニューの背景
 	int menu_back_width_ = 400, menu_back_height_ = 300;
-	Color menu_back_color_ = Color( 0, 0, 255, 102);
-	Rect menu_back_ = Rect( menu_back_width_, menu_back_height_).setCenter( Window::Center() );
+	Color menu_back_color_ = Color(0, 0, 255, 102);
+	Rect menu_back_ = Rect(menu_back_width_, menu_back_height_).setCenter(Window::Center());
 
 public:
-	Command *commands_;
+	std::vector<Command> commands_;
 	int selected_command_;
 
 	MenuWindow();
-	MenuWindow( Command commands[], int commands_n, SceneType usage_scene);
+	MenuWindow(Command commands[], int commands_n, SceneType usage_scene);
 
 	void DrawMenu();
 	CommandType ExecuteCommand(Command command);
