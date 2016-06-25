@@ -3,16 +3,15 @@
 
 #include "Constants.h"
 
-// クラス名 Cursor だとシステム定義のものとかぶる？
-class MainCursor{
+class MainCursor
+{
 private:
+	static const int INNER_FRAME_THICKNESS_;
+	static const int OUTER_FRAME_THICKNESS_;
+	static const Color FRAME_COLOR_;
+
 	int width_;
 	int height_;
-
-	int inner_frame_thickness_ = 1;
-	int outer_frame_thickness_ = 0;
-	
-	Color frame_color_ = Color( 255, 255, 255);
 	Rect cursor_;
 
 public:
@@ -24,11 +23,19 @@ public:
 	void DrawCursor();
 };
 
-class Block{
+class Block
+{
 private:
-	int outer_frame_thikness_ = 5;
+	static const int OUTER_FRAME_THICKNESS_;
 
 public:
+	static const int USUAL_WIDTH_;
+	static const int USUAL_HEIGHT_;
+	static const int MAX_WIDTH_;
+	static const int MAX_HEIGHT_;
+	static const bool DELETABLE_;
+	static const bool UNDELETABLE_;
+
 	bool deletable_;
 	Rect block_;
 	BlockColor block_color_;
@@ -41,23 +48,32 @@ public:
 	bool GetMouseOver();
 };
 
-class Field{
+class Field
+{
 private:
-	Font debug_txt_ = Font(30);
+	static const Color BLOCK_RED_;
+	static const Color BLOCK_BLUE_;
+	static const Color BLOCK_GREEN_;
+	static const Color BLOCK_YELLOW_;
+	static const Color BLOCK_MAGENTA_;
+
 	Point field_top_left_coordinates_;	// フィールドの左上の座標
 
+	// TODO: 使われてる？
 	Color block_red_	 = Color( 255,   0,   0);
 	Color block_green_	 = Color(   0, 255,   0);
 	Color block_blue_	 = Color(   0,   0, 255);
 	Color block_yellow_	 = Color( 255, 255,   0);
 	Color block_magenta_ = Color( 255,   0, 255);
-
-	Color test_color_	 = Color( 255, 255, 255, 204);
 	
 public:
-	int field_area_right_	= BLOCK_NUM_X - 1;
-	int field_area_bottom_	= BLOCK_NUM_Y - 1;
-	Block blocks_[BLOCK_NUM_X][BLOCK_NUM_Y];	
+	static const int BLOCK_NUM_X_ = 20;
+	static const int BLOCK_NUM_Y_ = 10;
+	static const int AREA_RIGHT_ = BLOCK_NUM_X_ - 1;
+	static const int AREA_BOTTOM_ = BLOCK_NUM_Y_ - 1;
+	int field_area_right_	= BLOCK_NUM_X_ - 1;
+	int field_area_bottom_	= BLOCK_NUM_Y_ - 1;
+	Block blocks_[BLOCK_NUM_X_][BLOCK_NUM_Y_];	
 	MainCursor cursor_;
 
 	Field();
@@ -77,7 +93,7 @@ class MainScene
 private:
 	int score_;
 	bool game_over_;
-	Font debug_txt_		= Font(30);
+	Font score_font_ = Font(30);
 	Font game_over_txt_ = Font(30);
 
 public:
@@ -103,16 +119,20 @@ public:
 class Command
 {
 private:
-	String command_text_ = L"初期化テスト";
+	static const Color SELECTED_COLOR_;
+	static const Rect test_rect;
+
+	String command_text_ = L"コマンド内に表示する文字列";
 	SceneType usage_scene_;	// コマンドを使用するシーン
-	CommandType command_type_;	// コマンドのタイプ
+	CommandType command_type_;	// コマンドの種類
+	// TODO: Font は static 非対応なので、かわりに FontAsset を導入する
 	Font command_text_font_ = Font(30);
-	Color selected_color_ = Color( 255, 0, 0, 102);
 
 public:
-	int command_area_width_ = 200;
-	int command_area_height_ = 50;
-	Rect command_area_ = Rect( command_area_width_, command_area_height_);
+	static const int AREA_WIDTH_;
+	static const int AREA_HEIGHT_;
+
+	Rect command_area_;
 
 	Command();
 	Command(String command_text, SceneType command_scene, CommandType command_type);
@@ -126,19 +146,22 @@ public:
 class MenuWindow
 {
 private:
+	static const int MENU_BACK_WIDTH_;
+	static const int MENU_BACK_HEIGHT_;
+	static const Color MENU_BACK_COLOR_;
+
 	SceneType usage_scene_;	// メニューウィンドウを使用するシーン
 
-							// メニューの背景
-	int menu_back_width_ = 400, menu_back_height_ = 300;
+	// メニューの背景
 	Color menu_back_color_ = Color(0, 0, 255, 102);
-	Rect menu_back_ = Rect(menu_back_width_, menu_back_height_).setCenter(Window::Center());
+	Rect menu_back_;
 
 public:
 	std::vector<Command> commands_;
 	int selected_command_;
 
 	MenuWindow();
-	MenuWindow(Command commands[], int commands_n, SceneType usage_scene);
+	MenuWindow(std::vector<Command> commands, SceneType usage_scene);
 
 	void DrawMenu();
 	CommandType ExecuteCommand(Command command);
@@ -148,15 +171,21 @@ public:
 class TitleScene
 {
 private:
+	static const int MENU_BACK_WIDTH_;
+	static const int MENU_BACK_HEIGHT_;
+	static const Color MENU_BACK_COLOR_;
+	static const SceneType SCENE_TYPE_;
+
 	Font title_font_ = Font(30);
-	int menu_back_width_ = 400;
-	int menu_back_height_ = 300;
-	Rect menu_back_ = Rect( menu_back_width_, menu_back_height_ ).setCenter( Window::Center() );
-	Color menu_back_color_ = Color( 0, 0, 255, 102);
-	Command title_menu_commands_[TITLE_MENU_COMMANDS_N];
-	SceneType scene_type_ = TITLE_SCENE;
+	Rect menu_back_;
+	Color menu_back_color_ =  Color( 0, 0, 255, 102);
+	std::vector<Command> title_menu_commands_;
+	const SceneType scene_type_ = TITLE_SCENE;
 
 public:
+	// TODO:使われてる?(vectorを導入したら不要になるかも)
+	static const int COMMANDS_N_ = 2;
+
 	MenuWindow title_scene_menu_;
 
 	TitleScene();

@@ -26,26 +26,24 @@ void MainScene::AddScore(int num_deleted_block)
 
 void MainScene::DisplayScore()
 {
-	debug_txt_( L"Score:", score_).draw();
+	score_font_( L"Score:", score_).draw();
 }
 
 void MainScene::MoveCursorByMouse()
 {
-	for (int yi=0; yi<BLOCK_NUM_Y; yi++)
-		for (int xi = 0; xi < BLOCK_NUM_X; xi++)
-		{
+	for (int yi=0; yi<Field::BLOCK_NUM_Y_; yi++)
+		for (int xi = 0; xi < Field::BLOCK_NUM_X_; xi++)
 			if (field_.blocks_[xi][yi].GetMouseOver())
 			{
 				field_.cursor_.position_x_	= xi;
 				field_.cursor_.position_y_	= yi;
 			}
-		}
 }
 
 void MainScene::MoveCursorToRight()
 {
 	field_.cursor_.position_x_ = field_.cursor_.position_x_+1;
-	if (field_.cursor_.position_x_>=BLOCK_NUM_X)
+	if (field_.cursor_.position_x_>=Field::BLOCK_NUM_X_)
 		field_.cursor_.position_x_ = 0;
 }
 
@@ -53,34 +51,34 @@ void MainScene::MoveCursorToLeft()
 {
 	field_.cursor_.position_x_ = field_.cursor_.position_x_-1;
 	if (field_.cursor_.position_x_<0)
-		field_.cursor_.position_x_ = BLOCK_NUM_X-1;
+		field_.cursor_.position_x_ = Field::BLOCK_NUM_X_-1;
 }
 
 void MainScene::MoveCursorToUp()
 {
 	field_.cursor_.position_y_ = field_.cursor_.position_y_-1;
 	if (field_.cursor_.position_y_<0)
-		field_.cursor_.position_y_ = BLOCK_NUM_Y-1;
+		field_.cursor_.position_y_ = Field::BLOCK_NUM_Y_-1;
 }
 
 void MainScene::MoveCursorToDown()
 {
 	field_.cursor_.position_y_ = field_.cursor_.position_y_+1;
-	if (field_.cursor_.position_y_>=BLOCK_NUM_Y)
+	if (field_.cursor_.position_y_ >= Field::BLOCK_NUM_Y_)
 		field_.cursor_.position_y_ = 0;
 }
 
 // ゲームオーバーの判定
 void MainScene::JudgeGameOver()
 {
-	for (int yi = 0; yi<BLOCK_NUM_Y; yi++)
-		for (int xi = 0; xi<BLOCK_NUM_X; xi++)
+	for (int yi = 0; yi<Field::BLOCK_NUM_Y_; yi++)
+		for (int xi = 0; xi<Field::BLOCK_NUM_X_; xi++)
 			// 同色が隣接している箇所が1つでもあればゲームオーバーではない
 			if (field_.blocks_[xi][yi].block_color_!=BLANK&&
 				((xi >= 1 && field_.blocks_[xi][yi].block_color_ == field_.blocks_[xi-1][ yi ].block_color_)||
 				 (yi >= 1 && field_.blocks_[xi][yi].block_color_ == field_.blocks_[ xi ][yi-1].block_color_) ||
-				 (xi < BLOCK_NUM_X-1&&field_.blocks_[xi][yi].block_color_ == field_.blocks_[xi+1][ yi ].block_color_)||
-				 (xi < BLOCK_NUM_Y-1&&field_.blocks_[xi][yi].block_color_ == field_.blocks_[ xi ][yi+1].block_color_)) )
+				 (xi < Field::AREA_RIGHT_  && field_.blocks_[xi][yi].block_color_ == field_.blocks_[xi+1][ yi ].block_color_)||
+				 (yi < Field::AREA_BOTTOM_ && field_.blocks_[xi][yi].block_color_ == field_.blocks_[ xi ][yi+1].block_color_)) )
 				return ;
 
 	game_over_ = true;

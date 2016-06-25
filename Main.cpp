@@ -1,32 +1,37 @@
-#include <Siv3D.hpp>
 #include "ClassDefinition.h"
 
 void Main()
 {
-	Window::SetTitle(L"さめがめ");
+	// 初期処理
+	Window::SetTitle(L"さめがめ");	// ウィンドウのタイトルの設定
 	SameGame samegame = SameGame();
-	const Point zero = Point( 0, 0);
-	Point delta;
+	const Point zero = Point( 0, 0);	// マウスが操作されてないと判断する移動量の基準
+	Point delta;	// マウスの移動量
 
+	// TODO:while(System::Update())内のループをもっと簡潔に
 	while (System::Update())
 	{
+		// マウスの移動量を取得する
 		delta = Mouse::Delta();
 
 		// 現在のシーンに合わせた処理
 		switch (samegame.GetCurrentScene())
 		{
 			case TITLE_SCENE:
-				// Enterキーが押されるか、左クリックされたら
+				// Enterキーが押されるか 左クリックされたら、選択されているコマンドを実行する
 				if (Input::KeyEnter.clicked || Input::MouseL.released)
 				{	
-					// 選択されているコマンドに合わせた処理を行う
+					// 選択されているコマンドを取得
 					Command selected_command = samegame.title_scene_.title_scene_menu_.GetSelectedCommand();
+					// 選択されているコマンドを実行する
 					switch (selected_command.GetCommandType())
 					{
+						// START が選択されていたら、ゲームを開始する(MAIN_SCENEへ)
 						case COMMAND_START:
 							samegame.SetCurrentScene(MAIN_SCENE);
 							break;
 
+						// QUITが選択されていたら、アプリケーションを終了する
 						case COMMAND_QUIT:
 							System::Exit();
 							break;
@@ -36,6 +41,7 @@ void Main()
 					}
 
 				}
+				// タイトルシーンを描画する
 				samegame.title_scene_.DrawScene();
 				break;
 			
@@ -45,7 +51,7 @@ void Main()
 				// 各ブロックの消去可能判定を初期化
 				samegame.main_scene_.field_.InitializeDeletablity();
 
-				if (delta!=zero)	// マウスカーソルが動かされたとき
+				if (delta!=zero)	// マウスカーソルが動かされたとき、マウスによるカーソル移動
 					samegame.main_scene_.MoveCursorByMouse();
 				else
 				{	
@@ -88,3 +94,4 @@ void Main()
 		}
 	}
 }
+
